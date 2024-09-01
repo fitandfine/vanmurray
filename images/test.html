@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support TKMUSIC - The Guitarist</title>
+
+    <!-- Google Analytics Placeholder -->
+    <!-- Replace with your Google Analytics code -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-GA-CODE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'YOUR-GA-CODE');
+    </script> -->
+    <!-- End Google Analytics -->
+
+    <style>
+        /* General Styles */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #121212;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* Language Selection Dropdown */
+        .language-select {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ffffff;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+        }
+
+        /* Header Styles */
+        h1 {
+            color: #ffeb3b;
+            margin-top: 60px;
+            animation: fadeIn 2s ease-in-out infinite alternate;
+        }
+
+        /* Dynamic Phrase Styles */
+        .dynamic-phrase {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #ff5722;
+        }
+
+        /* Artist Photo Styles */
+        .artist-photo-container {
+            position: relative;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        .artist-photo {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Animated Text Overlay */
+        .thank-you-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            animation: colorChange 3s infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% { color: #ffeb3b; }
+            50% { color: #ff9800; }
+            100% { color: #f44336; }
+        }
+
+        /* Main Button Styles */
+        .main-button {
+            font-size: 1.2em;
+            padding: 15px 30px;
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .main-button:hover {
+            background-color: #e64a19;
+        }
+
+        .main-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Follow Button Styles */
+        .follow-button {
+            font-size: 1em;
+            padding: 10px 20px;
+            background-color: #E1306C;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            background-image: linear-gradient(to right, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            animation: bounce 2s infinite;
+        }
+
+        /* Footer Buttons */
+        .footer-button {
+            font-size: 0.9em;
+            padding: 8px 16px;
+            background-color: #333333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        /* Pop-up Modal Styles */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #333;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            animation: slideIn 0.5s;
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ff5722;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+
+        /* Media Queries for Mobile Devices */
+        @media (max-width: 768px) {
+            .thank-you-text {
+                font-size: 1.5em;
+            }
+            .artist-photo-container {
+                width: 90%;
+            }
+            .main-button, .follow-button, .footer-button {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+    <script>
+        // Long Thank You Phrases
+        const longThankYouPhrases = [
+            "Thank you for buying me lunch!",
+            "Thanks for the coffee!",
+            "You just bought me dinner!",
+            "Thanks for the extra strings!",
+            "Appreciate the drinks!",
+            "Thanks for the support!",
+            "You made my day brighter!",
+            "Cheers to your generosity!",
+            "Grateful for your kindness!",
+            "You're awesome!",
+            "Music is better with you!",
+            "Thanks for the help!",
+            "Thanks for fueling my music!",
+            "Much appreciated!",
+            "You're a star!",
+            "Thanks for the energy boost!",
+            "You rock!",
+            "Your support means the world!",
+            "Thanks for the motivation!",
+            "Your donation keeps the music alive!",
+            // 80 more long phrases...
+        ];
+
+        // Short Thank You Phrases for Button Click
+        const shortThankYouPhrases = [
+            "Thanks!",
+            "You're the best!",
+            "Much appreciated!",
+            "You rock!",
+            "Amazing!",
+            "Cheers!",
+            "Thanks a ton!",
+            "You're awesome!",
+            "Big thanks!",
+            "High five!",
+            "Awesome!",
+            "Grateful!",
+            "Legend!",
+            "So kind!",
+            "Brilliant!",
+            "Fantastic!",
+            "Super!",
+            "Wonderful!",
+            "Cool!",
+            "You’re amazing!",
+            // 80 more short phrases...
+        ];
+
+        function changePhrase() {
+            const randomIndex = Math.floor(Math.random() * longThankYouPhrases.length);
+            document.getElementById('phrase').textContent = longThankYouPhrases[randomIndex];
+        }
+
+        function copyToClipboard(elementId) {
+            const textToCopy = document.getElementById(elementId).textContent;
+            
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = textToCopy;
+            document.body.appendChild(tempTextarea);
+
+            tempTextarea.select();
+            tempTextarea.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+
+            document.body.removeChild(tempTextarea);
+
+            showAcknowledgement(elementId);
+        }
+
+        function showAcknowledgement(elementId) {
+            const ackMessage = document.createElement('div');
+            const randomIndex = Math.floor(Math.random() * shortThankYouPhrases.length);
+            ackMessage.textContent = shortThankYouPhrases[randomIndex];
+            ackMessage.style.fontSize = '1.5em';
+            ackMessage.style.color = '#ffeb3b';
+            ackMessage.style.position = 'fixed';
+            ackMessage.style.bottom = '20%';
+            ackMessage.style.left = '50%';
+            ackMessage.style.transform = 'translate(-50%, -50%)';
+            ackMessage.style.zIndex = '9999';
+            ackMessage.style.backgroundColor = '#333';
+            ackMessage.style.padding = '10px 20px';
+            ackMessage.style.borderRadius = '5px';
+            document.body.appendChild(ackMessage);
+            setTimeout(() => {
+                document.body.removeChild(ackMessage);
+            }, 3000);
+        }
+
+        // Modal for Developer Info
+        function openModal() {
+            document.getElementById('developerModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('developerModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('developerModal')) {
+                closeModal();
+            }
+        }
+
+        // Modal for QR Code
+        function openQRModal() {
+            document.getElementById('qrCodeModal').style.display = "block";
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrCodeModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('qrCodeModal')) {
+                closeQRModal();
+            }
+        }
+
+        window.onload = function() {
+            changePhrase();
+        };
+    </script>
+</head>
+<body>
+    <!-- Language Selection Dropdown -->
+    <select id="language-select" class="language-select" onchange="changePhrase()">
+        <option value="en">English</option>
+    </select>
+
+    <!-- Artist Photo with Thank You Overlay -->
+    <div class="artist-photo-container">
+        <img src="/images/tawhai.jpg" alt="Guitarist TKMUSIC" class="artist-photo">
+        <div class="thank-you-text">Thanks from TAWHAI</div>
+    </div>
+
+    <!-- Dynamic Phrase -->
+    <div class="dynamic-phrase" id="phrase"></div>
+
+    <!-- Copy Bank Account Number Button -->
+    <div>
+        <div id="account-number" style="display: none;">12 3084 0302789 00</div>
+        <button class="main-button" onclick="copyToClipboard('account-number')">Click to Copy Bank Account Number</button>
+    </div>
+
+    <!-- Copy Reference Text Button -->
+    <div>
+        <div id="reference-text" style="display: none;">Reference: Love for Music</div>
+        <button class="main-button" onclick="copyToClipboard('reference-text')">Click to Copy Reference</button>
+    </div>
+
+    <!-- Instagram Follow Button -->
+    <button class="follow-button" onclick="window.open('https://www.instagram.com/tkmusicnz/', '_blank');">Follow on Instagram</button>
+
+    <!-- Footer Buttons -->
+    <div>
+        <button class="footer-button" onclick="openModal()">About Developer</button>
+        <button class="footer-button" onclick="openQRModal()">Share with Friend</button>
+    </div>
+
+    <!-- Developer Modal -->
+    <div id="developerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>About the Developer</h2>
+            <p>I am an international student here in Auckland studying Master in Software Engineering at Yoobee College of Creative Innovations.<br>
+                He had inspired me and I wanted to pay him back for his good vibes. Tragedy, I am just a student without an income. <br>
+                Thus, this is my effort to help my friend spreading happiness with his music.<br>
+                Thank you for supporting them. You can contact me via Instagram or email if you need some simple software solutions. 
+                And oh, am from Nepal: the country of the mount EVEREST! I am in love with New Zealand and people here.</p>
+            <img src="/images/anup_qr.png" alt="Anup QR Code" style="width: 150px; margin-top: 10px;">
+            <div style="margin-top: 10px;">
+                <button onclick="window.open('https://www.instagram.com/anupcp/', '_blank');">Friend Me on Insta</button>
+                <button onclick="window.open('mailto:pleasedontgetconfused@gmail.com');">Email Me</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal for Sharing -->
+    <div id="qrCodeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeQRModal()">&times;</span>
+            <h2>Thank You for Sharing</h2>
+            <p>Share this page with your friends by scanning the QR code below:</p>
+            <img src="/images/tk_page_qr.JPG" alt="Share QR Code" style="width: 150px; margin-top: 10px;">
+        </div>
+    </div>
+</body>
+</html>
